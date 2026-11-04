@@ -67,6 +67,10 @@ Nenhuma tela ou componente é entregue apenas com o "caminho feliz". Toda interf
 3. **CLS (Cumulative Layout Shift < 0.1):**
    - Toda tag `<img>`, `<video>` ou container de anúncio/embed deve declarar `width` e `height` ou `aspect-ratio` explícito no CSS.
    - Fontes web devem usar `font-display: swap` ou `optional` com métricas de fallback alinhadas.
+4. **Flutter / Mobile & Desktop Nativo (Orçamento de Frame 60/120fps — 16ms/8ms):**
+   - **Árvore e Rebuilds:** Use construtores `const` sempre que possível, isole repaints com `RepaintBoundary` e renderize listas longas exclusivamente com `ListView.builder` / `SliverList.builder`.
+   - **Tokens & Theming:** Centralize tokens em `ThemeData` (`ColorScheme` + `ThemeExtension<T>` customizadas); proibido espalhar `Color(0xFF...)` hardcoded nos widgets.
+   - **Acessibilidade Mobile:** Envolva controles customizados em `Semantics(label: ..., button: true)`, garanta área mínima de toque de `48x48dp` (Material) / `44x44pt` (Cupertino) e respeite `MediaQuery.textScalerOf(context)` sem truncar layouts com alturas fixas.
 
 ---
 

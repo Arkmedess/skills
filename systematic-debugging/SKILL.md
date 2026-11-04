@@ -6,9 +6,12 @@ description: Use esta skill sempre que houver um bug, falha em testes, stacktrac
 # Investigador Sistemático de Causa Raiz e Depuração
 
 ## Passo 1 — Reprodução Mínima Determinística (Obrigatória)
-Antes de inspecionar ou alterar a implementação:
+Antes de alterar qualquer implementação:
 1. **Escrever um Teste Reproduzindo a Falha:** Crie um teste unitário ou de integração automatizado que falhe comprovadamente pelo exato motivo do bug reportado (*Red*).
 2. **Isolar o Caso de Borda:** Reduza o payload, parâmetros ou sequência de passos ao menor exemplo viável que ainda dispare o defeito.
+3. **Protocolo para Bugs Intermitentes (Race Conditions / Heisenbugs / Ambiente):**
+   - Se a falha depender de concorrência, relógio ou ordem de eventos, torne-a determinística injetando *fake clock*, semente fixa (`SEED`) ou barreiras de sincronização (`CountDownLatch`/`Barrier`) em um teste concorrente de estresse.
+   - Se ocorrer apenas em infraestrutura/produção, extraia o payload/estado exato via `trace_id`/logs estruturados antes de transformá-lo em fixture de teste local.
 
 ---
 

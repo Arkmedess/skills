@@ -65,12 +65,22 @@ fi
 
 if [ -f "pyproject.toml" ]; then
   VER=$(grep -E -m 1 '^version[[:space:]]*=[[:space:]]*"[^"]+"' pyproject.toml | sed -E 's/^version[[:space:]]*=[[:space:]]*"([^"]+)".*/\1/' || true)
-  record_version "pyproject.toml" "$VER"
+  if [ -n "$VER" ]; then
+    record_version "pyproject.toml" "$VER"
+  elif grep -Eq 'dynamic[[:space:]]*=.*"version"' pyproject.toml; then
+    printf "   - %-30s -> %s\n" "pyproject.toml" "dinâmica (SCM/tag)"
+    MANIFEST_COUNT=$((MANIFEST_COUNT + 1))
+  fi
 fi
 
 if [ -f "Cargo.toml" ]; then
   VER=$(grep -E -m 1 '^version[[:space:]]*=[[:space:]]*"[^"]+"' Cargo.toml | sed -E 's/^version[[:space:]]*=[[:space:]]*"([^"]+)".*/\1/' || true)
-  record_version "Cargo.toml" "$VER"
+  if [ -n "$VER" ]; then
+    record_version "Cargo.toml" "$VER"
+  elif grep -Eq '^version\.workspace[[:space:]]*=[[:space:]]*true' Cargo.toml; then
+    printf "   - %-30s -> %s\n" "Cargo.toml" "herdada do workspace"
+    MANIFEST_COUNT=$((MANIFEST_COUNT + 1))
+  fi
 fi
 
 if [ -f "pubspec.yaml" ]; then
