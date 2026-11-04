@@ -24,7 +24,7 @@ fi
 echo ""
 
 # 2. Última Tag SemVer no Git
-LAST_TAG=$(git tag -l "v[0-9]*.[0-9]*.[0-9]*" --sort=-v:refname | head -n 1 || true)
+LAST_TAG=$(git tag -l "v[0-9]*.[0-9]*.[0-9]*" --sort=-v:refname | grep -v -- '-' | head -n 1 || true)
 if [ -z "$LAST_TAG" ]; then
   LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
 fi

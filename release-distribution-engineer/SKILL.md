@@ -82,7 +82,7 @@ git push origin vX.Y.Z
 2. **Executar `gh release create` com as Flags Corretas para o Cenário:**
    - **Release Estável Principal (Latest):**
      ```bash
-     gh release create vX.Y.Z ./dist/* SHA256SUMS sbom.json \
+     gh release create vX.Y.Z ./dist/* \
        --verify-tag \
        --target main \
        --title "vX.Y.Z - <Título Conciso da Release>" \
@@ -91,7 +91,7 @@ git push origin vX.Y.Z
      ```
    - **Pre-Release (`-alpha.N`, `-beta.N`, `-rc.N`):**
      ```bash
-     gh release create vX.Y.Z-rc.1 ./dist/* SHA256SUMS \
+     gh release create vX.Y.Z-rc.1 ./dist/* \
        --verify-tag \
        --target main \
        --title "vX.Y.Z-rc.1 (Release Candidate 1)" \
@@ -106,7 +106,7 @@ git push origin vX.Y.Z
 
 ## 5. Segurança da Cadeia de Suprimentos (SLSA, Sigstore e SBOM)
 - **SLSA Level 3 & Sigstore (Cosign):** Assinatura keyless vinculada ao OIDC do CI e atestação de proveniência (`references/slsa-and-sigstore-guide.md`).
-- **SBOM:** Geração de `sbom.json` (CycloneDX) via `syft` anexado aos assets da release.
+- **SBOM:** Gere `dist/sbom.json` (CycloneDX) com `syft dir:. -o cyclonedx-json=dist/sbom.json` **antes** de `generate_checksums.sh`, para que o `SHA256SUMS` o inclua. `./dist/*` já anexa artefatos, `SHA256SUMS` e `sbom.json` à release.
 
 ---
 
