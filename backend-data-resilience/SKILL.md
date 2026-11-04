@@ -13,17 +13,19 @@ description: >-
 
 É expressamente proibido aplicar alterações destrutivas ou que adquiram locks exclusivos prolongados (`ACCESS EXCLUSIVE`) diretamente em tabelas produtivas de alto volume:
 
-1. **Adição de Coluna Obrigatória (3 Etapas):**
-   - *Expand:* Adicione a nova coluna como `NULLABLE` (sem `DEFAULT` volátil que reescreva a tabela).
-   - *Backfill:* Atualize os registros existentes em lotes (*batches* de 1.000 a 10.000 linhas) usando `FOR UPDATE SKIP LOCKED` com pausas curtas entre transações.
-   - *Contract:* Aplique a constraint `NOT NULL` (ou `CHECK ... NOT VALID` seguido de `VALIDATE CONSTRAINT`).
-2. **Renomeação ou Mudança de Tipo de Coluna:**
+1. **Guard-Rails Obrigatórios de Lock e Timeout:**
+   - Toda migração DDL em produção deve definir explicitamente `SET lock_timeout = '2s'` e `SET statement_timeout = '5s'` (ou equivalente no dialeto) antes do `ALTER TABLE`. Se o lock não for obtido imediatamente, a migração deve abortar (fail-fast) em vez de enfileirar atrás de uma query longa e travar toda a tabela.
+2. **Adição de Coluna Obrigatória (3 Etapas):**
+   - *Expand:* Adicione a nova coluna como `NULLABLE` (sem `DEFAULT` volátil que reescreva a tabela). Em MySQL 8.0+, exija `ALGORITHM=INSTANT` ou `ALGORITHM=INPLACE, LOCK=NONE`.
+   - *Backfill:* Atualize os registros existentes em lotes (*batches* de 1.000 a 10.000 linhas) usando `FOR UPDATE SKIP LOCKED` com pausas curtas entre transações. Como `SKIP LOCKED` pula linhas travadas por transações concorrentes, finalize obrigatoriamente com uma checagem/passada final garantindo `COUNT(*) WHERE col IS NULL = 0` antes da fase Contract.
+   - *Contract (PostgreSQL 12+):* Aplique `ADD CONSTRAINT ... CHECK (col IS NOT NULL) NOT VALID`, execute `VALIDATE CONSTRAINT` (usa `SHARE UPDATE EXCLUSIVE`, não bloqueia leituras/escritas), promova para `ALTER COLUMN col SET NOT NULL` (instantâneo pois reaproveita a constraint validada) e remova a constraint auxiliar (`DROP CONSTRAINT`).
+3. **Renomeação ou Mudança de Tipo de Coluna:**
    - Proibido `RENAME COLUMN` ou `ALTER COLUMN TYPE` direto se houver instâncias da aplicação rodando em paralelo. Adicione a coluna nova, faça dual-write na aplicação, execute o backfill e remova a coluna antiga em deploy posterior.
-3. **Criação de Índices:**
-   - Em PostgreSQL/bancos relacionais, crie e remova índices em tabelas existentes **sempre de forma concorrente** (`CREATE INDEX CONCURRENTLY`), fora de blocos de transação que bloqueiem escritas.
-4. **Reversibilidade e Validação:**
-   - Toda migração exige script de `down` (rollback) determinístico e checagem de invariantes de contagem antes e depois da execução.
-   - Consulte `references/zero-downtime-migrations-and-etl.md` para templates SQL e Python/ORM.
+4. **Criação de Índices e Escape de Transação do ORM:**
+   - Em PostgreSQL, crie e remova índices em tabelas existentes **sempre de forma concorrente** (`CREATE INDEX CONCURRENTLY`), fora de blocos de transação (`atomic = False` no Django, `disable_ddl_transaction!` no Rails, `autocommit_block()` no Alembic, `$withinTransaction = false` no Laravel, `suppressTransaction: true` no EF Core). Se falhar, remova o índice deixado como `INVALID` antes de tentar novamente.
+5. **Reversibilidade por Fase (Expand vs. Contract):**
+   - Fases *Expand* exigem script de `down` (rollback) determinístico. Fases *Contract* destrutivas só ocorrem em deploy posterior após estabilização e seguem estratégia *roll-forward* (com backup/snapshot prévio).
+   - Consulte `references/zero-downtime-migrations-and-etl.md` para templates SQL, PostgreSQL/MySQL e ORMs.
 
 ---
 
@@ -35,7 +37,7 @@ Toda operação de escrita exposta a retries de rede, webhooks ou consumidores d
    - **APIs Mutáveis (POST/PATCH):** Exija e valide chave de idempotência (`Idempotency-Key` com lock atômico e TTL) para operações financeiras, pedidos ou disparos externos.
    - **Persistência em Lote:** Utilize `UPSERT` (`INSERT ... ON CONFLICT DO UPDATE`) baseado em chave natural/única de negócio ou *Delete-then-Insert* dentro da mesma transação para partições de data.
 2. **Isolamento de Transações de Banco vs. Efeitos Colaterais:**
-   - **Regra de Ouro:** **Proibido disparar chamadas HTTP, envio de e-mails ou publicações diretas em mensageria/filas dentro de transações de banco abertas.** Transações devem ser estritamente de banco de dados e ultracurtas (< 50ms).
+   - **Regra de Ouro:** **Proibido disparar chamadas HTTP, envio de e-mails ou publicações diretas em mensageria/filas dentro de transações de banco abertas.** Transações devem conter estritamente operações de banco de dados e ter duração mínima para não reter locks nem conexões do pool.
    - Para garantir consistência eventual sem bloquear transações ou gerar efeitos colaterais fantasmas em caso de rollback, utilize o padrão **Transactional Outbox** (gravar a mensagem na tabela outbox na mesma transação e despachar via worker assíncrono) ou publique o evento estritamente *após* o commit com sucesso.
 3. **Cancelamento Cooperativo e Propagação de Contexto:**
    - Propague sinais de cancelamento (`CancellationToken` em C#, `context.Context` em Go, `AbortController` em Node/TS) até as queries do banco e adaptadores de I/O.
