@@ -11,9 +11,9 @@ description: >-
 ## 1. Regra de Bloqueio: Medição Empírica Prévia (Baseline Obrigatório)
 Nenhum código é alterado por performance sem medição empírica prévia (*baseline* antes vs. depois). Argumentos subjetivos ("parece lento", "teoricamente mais rápido") são estritamente bloqueados.
 
-Para medir duração e pico de memória física RSS de um processo no terminal:
+Para medir duração (com aquecimento e múltiplas repetições estatísticas) e pico de memória física RSS de um processo no terminal:
 ```bash
-python3 <SKILL_DIR>/scripts/measure_rss_memory.py [comando...]   # <SKILL_DIR> = pasta deste SKILL.md
+python3 <SKILL_DIR>/scripts/measure_rss_memory.py [--warmup 2] [--runs 5] -- [comando...]   # <SKILL_DIR> = pasta deste SKILL.md
 ```
 
 ---
