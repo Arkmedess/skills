@@ -23,8 +23,8 @@ bash /home/arthur/.gemini/config/skills/git-commit-sentinel/scripts/verify_stage
 
 Critérios de bloqueio aplicados pelo script (e obrigatórios em inspeção manual via MCP):
 1. **Ausência de Staged:** Bloqueia se não houver arquivos adicionados (`git add` pendente).
-2. **Conflitos de Merge Residual:** Bloqueia marcadores `<<<<<<<`, `=======` ou `>>>>>>>`.
-3. **Segredos de Arquivos e Tokens Inline:** Bloqueia arquivos confidenciais (`.env`, `.pem`, `.key`, `id_rsa`, `credentials.json`, `.pfx`) e chaves/tokens expostos no conteúdo do diff (`PRIVATE KEY`, `ghp_`, `sk-`, `AKIA`, `xoxb-`).
+2. **Conflitos de Merge Residual:** Bloqueia marcadores `<<<<<<<` e `>>>>>>>` (o `=======` isolado é ignorado por colidir com títulos Markdown).
+3. **Segredos de Arquivos e Tokens Inline:** Bloqueia arquivos confidenciais (`.env*`, `*.pem`, `*.key`, `*.pfx`, `*.p12`, `id_rsa`, `id_ed25519`, `credentials.json`) e chaves/tokens expostos no diff (`BEGIN … PRIVATE KEY`, `ghp_`/`gho_`/…, `sk-` incluindo `sk-proj-`/`sk-ant-`, `AKIA`, `AIza`, `xox*-`). Se `gitleaks` estiver no PATH, ele roda adicionalmente (`NO_GITLEAKS=1` desativa). Testes: `bash tests/test_verify_staged_diff.sh`.
 4. **Resíduos de Debug em Produção:** Bloqueia `print(`, `console.log(`, `println!(`, `fmt.Println(`, `debugger` em código de produção (`.py`, `.ts`, `.tsx`, `.js`, `.jsx`, `.vue`, `.svelte`, `.cs`, `.rs`, `.go`, `.dart`, etc.), exceto em CLIs, docs e testes.
 5. **Sincronia de Versão e Cobertura de Testes:** Alerta se código de produção foi alterado sem testes correspondentes ou se um manifest de versão mudou sem sincronizar os demais.
 

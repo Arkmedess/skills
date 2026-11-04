@@ -24,7 +24,7 @@ while IFS= read -r file; do
   if echo "$file" | grep -E -q "(\.example|\.sample|\.template|\.dist)$"; then
     continue
   fi
-  if echo "$file" | grep -E -q "(^|/)(\.env(\.[a-zA-Z0-9_-]+)?|\.pem|\.key|id_rsa|id_ed25519|credentials\.json|\.pfx|\.p12)$"; then
+  if echo "$file" | grep -E -q "(^|/)\.env(\.[a-zA-Z0-9_-]+)?$|\.(pem|key|pfx|p12)$|(^|/)(id_rsa|id_ed25519|credentials\.json)$"; then
     echo "🚨 BLOQUEIO DE SEGURANÇA: Arquivo confidencial/segredo detectado no staged: $file"
     IS_SECRET_FILE=1
   fi
@@ -38,12 +38,19 @@ fi
 # 4. Bloquear marcadores de conflito de merge e tokens/chaves privadas inline no diff
 FULL_STAGED_DIFF=$(git diff --cached || true)
 
-if echo "$FULL_STAGED_DIFF" | grep -E -q "^\+(<<<<<<<|=======|>>>>>>>)"; then
+if echo "$FULL_STAGED_DIFF" | grep -E -q "^\+(<{7}|>{7})( |$)"; then
   echo "🚨 BLOQUEIO DE INTEGRIDADE: Marcadores de conflito de merge (<<<<<<< / ======= / >>>>>>>) detectados no staged!"
   exit 1
 fi
 
-SECRET_TOKEN_REGEX="^\+.*(BEGIN (RSA |OPENSSH |EC |PRIVATE )?KEY|AKIA[0-9A-Z]{16}|ghp_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9_]{22,}|sk-[a-zA-Z0-9]{20,}|xox[baprs]-[a-zA-Z0-9-]+)"
+if [ -z "${NO_GITLEAKS:-}" ] && command -v gitleaks >/dev/null 2>&1; then
+  if ! gitleaks git --staged --no-banner --redact >/dev/null 2>&1; then
+    echo "🚨 BLOQUEIO DE SEGURANÇA: gitleaks detectou segredo no staged (rode 'gitleaks git --staged -v --redact' para detalhes)."
+    exit 1
+  fi
+fi
+
+SECRET_TOKEN_REGEX="^\+.*(BEGIN ([A-Z]+ )*PRIVATE KEY|AKIA[0-9A-Z]{16}|gh[pousr]_[a-zA-Z0-9]{36}|github_pat_[a-zA-Z0-9_]{22,}|AIza[0-9A-Za-z_-]{35}|xox[baprs]-[a-zA-Z0-9-]+)|^\+(.*[^a-zA-Z0-9])?sk-[a-zA-Z0-9_-]{20,}"
 if echo "$FULL_STAGED_DIFF" | grep -E -q "$SECRET_TOKEN_REGEX"; then
   echo "🚨 BLOQUEIO DE SEGURANÇA: Possível chave privada ou token de API detectado inline no diff staged!"
   echo "💡 Remova a credencial hardcoded e utilize variáveis de ambiente ou cofre de segredos."
