@@ -47,7 +47,7 @@ Ao emitir o relatório de perfil, forneça a calibração que as outras skills d
 
 ### 3. Para `observability-logging-auditor`:
 - **Web API / Serviços:** Logs estruturados em JSON para stdout, níveis semânticos e correlation IDs.
-- **CLI:** Logs formatados para leitura humana em **stderr** (quando TTY); JSON apenas com `--format json`; stdout reservado estritamente para dados de saída (pipes); logs detalhados apenas com `-v`/`--debug`.
+- **CLI:** Logs formatados para leitura humana em **stderr** (quando TTY); JSON estruturado em stderr apenas com `--log-format json`; stdout reservado estritamente para dados de negócio (`--json` para payload de máquina); logs detalhados apenas com `-v`/`--debug`.
 - **Biblioteca / SDK / Extensão Nativa:** **Proibido configurar handlers ou subscribers globais**. Apenas emita eventos estruturados para o ecossistema do consumidor hospedeiro.
 
 ### 4. Para `security-vulnerability-warden`:

@@ -45,12 +45,11 @@ Rejeite Compose files sem contenção de recursos:
 Todo workflow deve respeitar a ordem de custo computacional crescente:
 1. **Least Privilege & Supply Chain Pinning:** Declarar obrigatoriamente `permissions: contents: read` no topo do workflow e fixar Actions de terceiros por hash SHA completo (`uses: owner/action@<sha> # vX`).
 2. **Timeouts Explícitos:** `timeout-minutes` definido em cada job (máximo 10-15 min).
-3. **Pipeline Fail-Fast:**
-   - 1º: Lint e Checagem Estática em paralelo.
+3. **Pipeline Fail-Fast (Ordem de Custo Computacional Crescente):**
+   - 1º: Lint, Formatação, Checagem de Tipos e Secret Scan em paralelo.
    - 2º: Testes Unitários rápidos sem I/O.
-   - 3º: Mutation Testing econômico (estritamente no diff de arquivos modificados no PR).
-   - 4º: Build e empacotamento com cache de CI (`cache-from: type=gha`).
-   - 5º: Testes de integração e Testcontainers por último.
+   - 3º: Build e empacotamento com cache de CI (`cache-from: type=gha`).
+   - 4º: Testes de Integração (Testcontainers) e Mutation Testing econômico (restrito ao diff do PR).
 
 *Consulte:* `references/github-actions-hardening.md`.
 

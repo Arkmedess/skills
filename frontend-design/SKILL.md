@@ -64,11 +64,9 @@ Antes de qualquer decisão ou proposta de design, inspecione a base de código:
    - **Regra de Ouro:** **Siga estritamente o atual.** É expressamente proibido reinventar a paleta, renomear variáveis existentes, duplicar tokens com valores conflitantes ou criar um style guide paralelo.
    - Extraia e reutilize a nomenclatura, escalas espaciais, cores semânticas e diretrizes visuais consolidadas.
    - Se uma nova feature demandar um token inédito, adicione-o como extensão harmônica no mesmo arquivo/mecanismo oficial de tokens, mantendo a coerência semântica com o padrão do projeto.
-3. **Cenário 2 — Se Design Tokens e Style Guide NÃO Existirem:**
-   - **Regra de Ouro:** **Crie formalmente os Design Tokens e o Style Guide** antes de sair implementando telas ou componentes.
-   - É expressamente proibido espalhar valores hexadecimais ou medidas mágicas ad-hoc no CSS inline ou nas classes utilitárias.
-   - Crie o arquivo base de tokens da stack (ex.: `tokens.css` com `:root`, ou o módulo de theme da tecnologia) estruturado nos 4 pilares descritos abaixo.
-   - Crie ou formalize o Style Guide de referência (ex.: `STYLEGUIDE.md` ou na documentação do projeto), servindo como a fonte da verdade visual para todas as futuras fatias e componentes.
+   - **Caso NÃO EXISTAM Tokens e Style Guide:**
+     - *Em novos projetos, novas telas ou redesigns:* **Crie formalmente os Design Tokens (`tokens.css` / theme) e o Style Guide (`STYLEGUIDE.md`)** antes de construir os componentes.
+     - *Em correções de bug ou ajustes cirúrgicos pontuais (< 20 linhas):* Respeite a Cirurgia de Diff (YAGNI) — siga os estilos adjacentes existentes sem criar arquivos de governança novos não solicitados.
 
 ### B. Sistema Compacto de Tokens (Os 4 Pilares Fundamentais)
 Ao estabelecer ou estender tokens, estruture-os em 4 pilares:
@@ -97,8 +95,8 @@ A tipografia carrega a alma e a voz do produto:
    - Utilize uma família tipográfica forte, ou no máximo duas com distinção clara de função (ex.: uma serifa com caráter expressivo para display e uma sem serifa neutra para dados/corpo).
    - Fuja das 3 opções padrão de IA (Inter, Roboto, Arial) quando o brief pedir personalidade.
 2. **Ritmo de Leitura e Escala:**
-   - Limite o comprimento de linhas de leitura a **menos de 75 a 80 caracteres** para evitar fadiga ocular.
-   - Para fontes com serifa no corpo, dê ligeiramente mais entrelinha (`line-height: 1.6`); para sem serifa, mantenha em torno de `1.4–1.5`.
+   - Limite a largura de linha de leitura entre **`60ch` e `75ch`** para evitar fadiga ocular.
+   - Para fontes com serifa no corpo, dê ligeiramente mais entrelinha (`line-height: 1.6`); para sem serifa, mantenha `line-height: 1.5` (e `1.15–1.25` para títulos).
 3. **Tratamento Tipográfico Proibido:**
    - Destacar apenas uma palavra no meio do título com itálico, negrito ou cor destoante (tell clássico de landing page gerada).
    - Labels ou botões com textos inteiros em caixa alta (prejudica a velocidade de reconhecimento de formas das palavras).
@@ -108,7 +106,7 @@ A tipografia carrega a alma e a voz do produto:
 ## 5. Boas Práticas Universais de Design & Leis de UX
 
 1. **Lei de Fitts (Ergonomia e Facilidade de Toque):**
-   - Alvos clicáveis devem ter área interativa mínima de **44x44px** (ou padding equivalente).
+   - Piso normativo WCAG 2.2 AA (SC 2.5.8): mínimo de **24x24px** CSS; meta ergonômica recomendada (WCAG AAA 2.5.5 / mobile touch): **44x44px** (ou padding equivalente).
    - Ações frequentes e destrutivas devem ter separação espacial deliberada para prevenir cliques acidentais.
 2. **Lei de Hick (Redução de Sobrecarga Decisória):**
    - Uma tela ou componente não deve competir com múltiplos botões de ação primária.

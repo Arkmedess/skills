@@ -68,7 +68,7 @@ Ao concluir a fatia, carregue o `SKILL.md` da próxima skill aplicável e emita 
 ```text
 HANDOFF
 De: vertical-slice-implementer
-Para: code-hygiene-auditor (obrigatório para lint e Clean Code) | test-suite-architect (para testes de integração/mutação) | module-documentation-scribe (obrigatório ao concluir a fatia)
+Para: code-hygiene-auditor (obrigatório para lint e Clean Code) | test-suite-architect (para testes de integração/mutação) | module-documentation-scribe (quando houver novo recurso ou alteração de contrato público)
 Motivo: <resumo da funcionalidade implementada, ciclo Red-Green-Simplify e testes executados>
 Contexto necessário: <contrato público da fatia, arquivos alterados e decisões de design>
 ```

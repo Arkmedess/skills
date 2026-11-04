@@ -39,7 +39,7 @@ Ao finalizar a revisão, carregue o `SKILL.md` da próxima skill aplicável e em
 ```text
 HANDOFF
 De: code-review-pr-auditor
-Para: vertical-slice-implementer (para corrigir blockers de código) | backend-data-resilience (se houver blocker em migration/query) | frontend-ui-craftsman (se houver blocker de UI/WCAG) | test-suite-architect (se faltarem testes) | git-commit-sentinel (se aprovado)
+Para: vertical-slice-implementer (para corrigir blockers de código) | security-vulnerability-warden (se houver risco de segurança/IDOR/segredos) | observability-logging-auditor (se houver PII em logs ou falta de rastreabilidade) | backend-data-resilience (se houver blocker em migration/query) | frontend-ui-craftsman (se houver blocker de UI/WCAG) | test-suite-architect (se faltarem testes) | git-commit-sentinel (se aprovado)
 Motivo: <veredito da revisão: aprovado vs mudanças requeridas>
 Contexto necessário: <lista de blockers com arquivo:linha e status dos testes>
 ```
