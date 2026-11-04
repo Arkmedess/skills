@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate-and-test:
+    name: Lint, Portability & Script Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Check Bash syntax
+        run: |
+          bash -n */scripts/*.sh tests/*.sh */tests/*.sh
+
+      - name: Check Python syntax
+        run: |
+          python3 -m py_compile runtime-performance-diagnostician/scripts/measure_rss_memory.py
+
+      - name: Run ShellCheck
+        run: |
+          shellcheck -S warning */scripts/*.sh tests/*.sh */tests/*.sh
+
+      - name: Run portability and link checks
+        run: |
+          bash tests/test_portability.sh
+          for f in */SKILL.md; do
+            d=$(dirname "$f")
+            grep -oE '(references|examples|scripts)/[A-Za-z0-9_./-]+\.(md|sh|py|yml)' "$f" | sort -u | while read -r r; do
+              test -e "$d/$r" || { echo "Missing reference: $f -> $r"; exit 1; }
+            done
+          done
+
+      - name: Run script test suites
+        run: |
+          bash git-commit-sentinel/tests/test_verify_staged_diff.sh
+          bash release-distribution-engineer/tests/test_check_version_and_readiness.sh
