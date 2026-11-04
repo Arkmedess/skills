@@ -47,7 +47,7 @@ Audite rigorosamente no `git diff`:
 ---
 
 ## Passo 4 — Delegação para Especialistas Canônicos
-Acione via `view_file` quando detectar problemas específicos:
+Carregue o `SKILL.md` do especialista quando detectar problemas específicos:
 - **UI / Acessibilidade / Estado de Componentes:** `frontend-ui-craftsman`.
 - **SQL / Migrations / Cache / Filas:** `backend-data-resilience`.
 - **Test Smells:** `test-suite-architect`.
@@ -58,7 +58,7 @@ Acione via `view_file` quando detectar problemas específicos:
 
 ## Handoff
 
-Ao concluir a auditoria, acione via `view_file` a próxima skill aplicável e emita o bloco:
+Ao concluir a auditoria, carregue o `SKILL.md` da próxima skill aplicável e emita o bloco:
 
 ```text
 HANDOFF

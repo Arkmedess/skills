@@ -63,7 +63,7 @@ Toda operação de escrita exposta a retries de rede, webhooks ou consumidores d
 
 ## Handoff
 
-Ao concluir a modelagem de migração, persistência, fila ou cache, acione via `view_file` a próxima skill aplicável e emita o bloco:
+Ao concluir a modelagem de migração, persistência, fila ou cache, carregue o `SKILL.md` da próxima skill aplicável e emita o bloco:
 
 ```text
 HANDOFF

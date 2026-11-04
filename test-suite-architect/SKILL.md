@@ -49,7 +49,7 @@ Toda rotina de mutação obedece ao **Diff Scoping** (apenas linhas alteradas) e
 
 ## Handoff
 
-Ao concluir a suíte, acione via `view_file` a próxima skill aplicável e emita o bloco:
+Ao concluir a suíte, carregue o `SKILL.md` da próxima skill aplicável e emita o bloco:
 
 ```text
 HANDOFF

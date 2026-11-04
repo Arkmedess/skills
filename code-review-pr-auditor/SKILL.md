@@ -34,7 +34,7 @@ Utilize `references/code-review-checklist.md` para auditar:
 
 ## Handoff
 
-Ao finalizar a revisão, acione via `view_file` a próxima skill aplicável e emita o bloco:
+Ao finalizar a revisão, carregue o `SKILL.md` da próxima skill aplicável e emita o bloco:
 
 ```text
 HANDOFF

@@ -15,7 +15,7 @@ Esta skill padroniza Dockerfiles, Compose files e pipelines de CI/CD com foco em
 Antes de aprovar ou commitar qualquer imagem de contêiner, execute o script de auditoria estática:
 
 ```bash
-bash /home/arthur/.gemini/config/skills/infra-pipeline-hardener/scripts/audit_dockerfile.sh [caminho/para/Dockerfile]
+bash <SKILL_DIR>/scripts/audit_dockerfile.sh [caminho/para/Dockerfile]   # <SKILL_DIR> = pasta deste SKILL.md
 ```
 
 Critérios verificados:

@@ -33,7 +33,7 @@ description: >-
 ## 3. Topologia e Delegação de Especialidades
 
 - **Topologia Coesa por Horizonte:** Agrupe pelo eixo funcional do modelo arquitetural ativo calibrado por `project-horizon-profiler` e `architecture-boundary-auditor` (`features/<feature>/` em Web/APIs/Apps, `commands/<cmd>/` em CLIs, `pipeline/stages/` em Pipelines de Dados ou `domain/`+`ports/`+`adapters/` em Hexagonal). Proibido criar pastas horizontais genéricas soltas (`controllers/`, `services/`, `utils/` globais) quando o projeto seguir Vertical Slice.
-- **Fronteiras de Especialidade (Acione em conjunto via `view_file`):**
+- **Fronteiras de Especialidade (Carregue o `SKILL.md` em conjunto):**
   - Se a fatia envolver **UI / Frontend / Componentes / CSS**: leia e aplique `frontend-ui-craftsman`.
   - Se a fatia envolver **Migrations, SQL, Paginação, Filas, ETL ou Cache**: leia e aplique `backend-data-resilience`.
   - Se a arquitetura do repositório ainda não foi validada: leia e aplique `architecture-boundary-auditor` primeiro.
@@ -63,7 +63,7 @@ description: >-
 
 ## Handoff
 
-Ao concluir a fatia, acione via `view_file` a próxima skill aplicável e emita o bloco:
+Ao concluir a fatia, carregue o `SKILL.md` da próxima skill aplicável e emita o bloco:
 
 ```text
 HANDOFF

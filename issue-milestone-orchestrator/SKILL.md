@@ -58,7 +58,7 @@ Toda issue deve ser concisa, inequívoca e estruturada conforme `references/issu
 
 Execute o script de sincronização no terminal para padronizar labels:
 ```bash
-bash /home/arthur/.gemini/config/skills/issue-milestone-orchestrator/scripts/sync_github_labels.sh
+bash <SKILL_DIR>/scripts/sync_github_labels.sh   # <SKILL_DIR> = pasta deste SKILL.md
 ```
 
 - **P0 (`priority: critical`):** SLA < 2h (parada total de produção, falha de segurança ativa ou corrupção de dados).
@@ -97,7 +97,7 @@ gh api repos/:owner/:repo/milestones/:id -X PATCH -f state="closed"
 
 ## Handoff
 
-Ao finalizar a governança de issues e milestones, acione via `view_file` a próxima skill aplicável e emita o bloco:
+Ao finalizar a governança de issues e milestones, carregue o `SKILL.md` da próxima skill aplicável e emita o bloco:
 
 ```text
 HANDOFF

@@ -18,7 +18,7 @@ Nenhum commit deve misturar refatoração com correção de bug ou nova funciona
 Antes de redigir a mensagem ou executar o commit local, valide o staged diff (`git diff --cached`):
 
 ```bash
-bash /home/arthur/.gemini/config/skills/git-commit-sentinel/scripts/verify_staged_diff.sh
+bash <SKILL_DIR>/scripts/verify_staged_diff.sh   # <SKILL_DIR> = pasta deste SKILL.md
 ```
 
 Critérios de bloqueio aplicados pelo script (e obrigatórios em inspeção manual via MCP):
@@ -85,7 +85,7 @@ Quando operar diretamente sobre repositórios remotos usando as ferramentas do s
 
 ## Handoff
 
-Ao concluir a validação ou execução do commit/PR, acione via `view_file` a próxima skill aplicável e emita o bloco:
+Ao concluir a validação ou execução do commit/PR, carregue o `SKILL.md` da próxima skill aplicável e emita o bloco:
 
 ```text
 HANDOFF

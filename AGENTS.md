@@ -23,11 +23,11 @@ Este arquivo governa todas as interações e sessões em qualquer projeto. Todas
 ## 0.1 Protocolo Resiliente de Ativação e Encadeamento de Skills (Hard-Gate)
 
 > **REGRA DE BLOQUEIO DE FERRAMENTA (COMO ATIVAR UMA SKILL):**
-> "Ativar uma skill" **NÃO** é um exercício mental: significa **invocar obrigatoriamente a ferramenta `view_file` no arquivo `/home/arthur/.gemini/config/skills/<nome-da-skill>/SKILL.md` ANTES de propor arquitetura, escrever testes, editar código ou executar comandos daquela etapa.**
-> - Se múltiplas skills forem aplicáveis ao turno atual, leia seus `SKILL.md` **em paralelo no mesmo turno** via `view_file`.
+> "Ativar uma skill" **NÃO** é um exercício mental: significa **ler obrigatoriamente, com a ferramenta de leitura de arquivos disponível, o `SKILL.md` da skill (use o caminho informado no catálogo de skills do harness; `<SKILL_DIR>` = pasta que contém esse `SKILL.md`) ANTES de propor arquitetura, escrever testes, editar código ou executar comandos daquela etapa.**
+> - Se múltiplas skills forem aplicáveis ao turno atual, leia seus `SKILL.md` **em paralelo no mesmo turno** com a ferramenta de leitura de arquivos.
 > - É expressamente proibido iniciar o Passo 1 de implementação ou emitir diagnósticos sem antes ter carregado o `SKILL.md` correspondente no contexto da conversa.
 
-### A. Matriz de Gatilhos Obrigatórios (`Intenção -> view_file(SKILL.md)`)
+### A. Matriz de Gatilhos Obrigatórios (`Intenção -> ler SKILL.md`)
 
 | Gatilho / Contexto da Tarefa | Skill Obrigatória (`SKILL.md`) | Responsabilidade Crítica |
 | :--- | :--- | :--- |
@@ -88,7 +88,7 @@ O agente **não impõe uma arquitetura única** para todos os problemas. A arqui
    - *Quando adotar:* Monolitos corporativos onde a separação `Entities / UseCases / Adapters / Frameworks` já é o padrão consolidado.
 
 ### B. Protocolo para Repositórios Sem Arquitetura Definida ou Ambígua
-1. **Inspeção de Contexto (Zero Suposição):** Carregue via `view_file` as skills `project-horizon-profiler` e `architecture-boundary-auditor`.
+1. **Inspeção de Contexto (Zero Suposição):** Carregue (leia o `SKILL.md` de) as skills `project-horizon-profiler` e `architecture-boundary-auditor`.
 2. **Proposta Arquitetural Estruturada:** É proibido criar pastas silenciosamente. Apresente ao desenvolvedor o diagnóstico atual, 2 ou 3 abordagens viáveis com prós/contras e a recomendação justificada.
 3. **Decisão do Desenvolvedor:** Aguarde aprovação explícita antes de criar diretórios ou mover arquivos.
 
@@ -100,7 +100,7 @@ O escopo de cada entrega é limitado à **menor unidade lógica coesa e auditáv
 
 ### Fluxo Obrigatório em 6 Etapas:
 - **Passo 1 — Pre-Flight de Skills, Localização & Intenção Arquitetural:**
-  - Carregue via `view_file` as `SKILL.md` exigidas pela tarefa.
+  - Carregue (leia) os `SKILL.md` exigidos pela tarefa.
   - Declare obrigatoriamente no topo da resposta: **`[Skills Ativas: <nomes-das-skills-lidas>]`**.
   - Declare em 1 frase o objetivo da mudança, os arquivos exatos afetados (`file:///...`), a fatia/camada impactada e o princípio SOLID/padrão aplicado.
 - **Passo 2 — Contrato, Assinatura & Teste TDD (Red) ou Minuta Declarativa:**

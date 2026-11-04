@@ -70,7 +70,7 @@ Ao emitir o relatório de perfil, forneça a calibração que as outras skills d
 
 ## Handoff
 
-Ao traçar o perfil de horizonte do projeto, acione via `view_file` a próxima skill aplicável e emita o bloco:
+Ao traçar o perfil de horizonte do projeto, carregue o `SKILL.md` da próxima skill aplicável e emita o bloco:
 
 ```text
 HANDOFF

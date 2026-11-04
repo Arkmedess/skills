@@ -13,7 +13,7 @@ Nenhuma versão é alterada, nenhuma tag é criada e nenhuma release é publicad
 
 1. Execute o script determinístico de diagnóstico de versão e commits:
    ```bash
-   bash /home/arthur/.gemini/config/skills/release-distribution-engineer/scripts/check_version_and_readiness.sh
+   bash <SKILL_DIR>/scripts/check_version_and_readiness.sh   # <SKILL_DIR> = pasta deste SKILL.md
    ```
    *(Caso opere exclusivamente via servidor MCP `github`, execute a mesma verificação consultando `list_commits` e `get_file_contents` nos manifests).*
 
@@ -54,7 +54,7 @@ Consulte `references/breaking-changes-tools.md` para validar assinaturas públic
 2. **Geração e Validação de `SHA256SUMS`:**
    - Sempre que houver artefatos empacotados em `dist/`, gere e valide o manifesto criptográfico:
      ```bash
-     bash /home/arthur/.gemini/config/skills/release-distribution-engineer/scripts/generate_checksums.sh [dist/]
+     bash <SKILL_DIR>/scripts/generate_checksums.sh [dist/]   # <SKILL_DIR> = pasta deste SKILL.md
      ```
 
 ---
@@ -112,7 +112,7 @@ git push origin vX.Y.Z
 
 ## Handoff
 
-Ao concluir o diagnóstico ou a publicação da release, acione via `view_file` a próxima skill aplicável e emita o bloco:
+Ao concluir o diagnóstico ou a publicação da release, carregue o `SKILL.md` da próxima skill aplicável e emita o bloco:
 
 ```text
 HANDOFF

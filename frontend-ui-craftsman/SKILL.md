@@ -91,7 +91,7 @@ Nenhuma tela ou componente é entregue apenas com o "caminho feliz". Toda interf
 
 ## Handoff
 
-Ao concluir a implementação ou auditoria de interface, acione via `view_file` a próxima skill aplicável e emita o bloco:
+Ao concluir a implementação ou auditoria de interface, carregue o `SKILL.md` da próxima skill aplicável e emita o bloco:
 
 ```text
 HANDOFF

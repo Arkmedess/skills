@@ -13,7 +13,7 @@ Nenhum código é alterado por performance sem medição empírica prévia (*bas
 
 Para medir duração e pico de memória física RSS de um processo no terminal:
 ```bash
-python3 /home/arthur/.gemini/config/skills/runtime-performance-diagnostician/scripts/measure_rss_memory.py [comando...]
+python3 <SKILL_DIR>/scripts/measure_rss_memory.py [comando...]   # <SKILL_DIR> = pasta deste SKILL.md
 ```
 
 ---
@@ -42,7 +42,7 @@ Toda intervenção exige apresentação do relatório (*Baseline $\rightarrow$ G
 
 ## Handoff
 
-Ao concluir o diagnóstico, acione via `view_file` a próxima skill aplicável e emita o bloco:
+Ao concluir o diagnóstico, carregue o `SKILL.md` da próxima skill aplicável e emita o bloco:
 
 ```text
 HANDOFF
