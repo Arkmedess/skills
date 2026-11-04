@@ -21,8 +21,8 @@ bash <SKILL_DIR>/scripts/audit_dockerfile.sh [caminho/para/Dockerfile]   # <SKIL
 Critérios verificados:
 1. **Multi-Stage Build:** Separação rígida de compilação e runtime.
 2. **BuildKit Cache Mounts:** Utilização de `--mount=type=cache` para gerenciadores de dependência.
-3. **Usuário Não-Root (UID 10001):** Proibido executar processo final como `root`.
-4. **Healthcheck Nativo:** Declarado com timeouts e retries curtos.
+3. **Usuário Não-Root (ex.: UID 10001 ou `nonroot`):** Proibido executar processo final como `root` ou UID `0`.
+4. **Healthcheck Nativo:** Declarado com timeouts e retries curtos (dispensado quando o estágio final for `scratch` ou `distroless`, caso em que a sonda deve ser declarada no Compose/Kubernetes; `HEALTHCHECK NONE` é bloqueado).
 5. **`.dockerignore`:** Exclusão obrigatória de caches locais, `.git`, arquivos de teste e credenciais.
 
 *Consulte:* [production-dockerfile-patterns.md](./references/production-dockerfile-patterns.md) para templates prontos de Python (uv), Rust (cargo-chef), Go (scratch) e Node (Next.js standalone), e [stack-build-matrix.md](./references/stack-build-matrix.md) para lockfiles determinísticos e imagens base por stack.
@@ -44,7 +44,7 @@ Rejeite Compose files sem contenção de recursos:
 ## 3. Pipelines de CI/CD (GitHub Actions)
 Todo workflow deve respeitar a ordem de custo computacional crescente:
 1. **Least Privilege & Supply Chain Pinning:** Declarar obrigatoriamente `permissions: contents: read` no topo do workflow e fixar Actions de terceiros por hash SHA completo (`uses: owner/action@<sha> # vX`).
-2. **Timeouts Explícitos:** `timeout-minutes` definido em cada job (máximo 10-15 min).
+2. **Timeouts Explícitos:** `timeout-minutes` definido em cada job (10–15 min para lint/testes rápidos; até 30 min para compilação nativa pesada em Rust/C++/Mobile com cache).
 3. **Pipeline Fail-Fast (Ordem de Custo Computacional Crescente):**
    - 1º: Lint, Formatação, Checagem de Tipos e Secret Scan em paralelo.
    - 2º: Testes Unitários rápidos sem I/O.
