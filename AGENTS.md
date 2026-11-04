@@ -24,7 +24,8 @@ Este arquivo governa todas as interações e sessões em qualquer projeto. Todas
 
 > **REGRA DE BLOQUEIO DE FERRAMENTA (COMO ATIVAR UMA SKILL):**
 > "Ativar uma skill" **NÃO** é um exercício mental: significa **ler obrigatoriamente, com a ferramenta de leitura de arquivos disponível, o `SKILL.md` da skill (use o caminho informado no catálogo de skills do harness; `<SKILL_DIR>` = pasta que contém esse `SKILL.md`) ANTES de propor arquitetura, escrever testes, editar código ou executar comandos daquela etapa.**
-> - Se múltiplas skills forem aplicáveis ao turno atual, leia seus `SKILL.md` **em paralelo no mesmo turno** com a ferramenta de leitura de arquivos.
+> - Se múltiplas skills forem aplicáveis ao turno atual, leia seus `SKILL.md` **em paralelo no mesmo turno** com a ferramenta de leitura de arquivos (limite pragmático de **2 a 3 skills nucleares por turno** para preservar o orçamento de contexto).
+> - **Prevenção de Ciclos de Handoff:** Os blocos `HANDOFF` ao final de cada skill indicam o encadeamento lógico da esteira, mas nunca devem gerar loops infinitos (`A -> B -> A`). Uma skill já carregada na sessão atual não precisa ser relida.
 > - É expressamente proibido iniciar o Passo 1 de implementação ou emitir diagnósticos sem antes ter carregado o `SKILL.md` correspondente no contexto da conversa.
 
 ### A. Matriz de Gatilhos Obrigatórios (`Intenção -> ler SKILL.md`)
@@ -108,6 +109,7 @@ O escopo de cada entrega é limitado à **menor unidade lógica coesa e auditáv
   - *Mudança Documental/Declarativa:* Apresente a estrutura do arquivo ou minuta do diff planejado e validação de formato/schema.
 - **Passo 3 — Checkpoint de Calibração com o Desenvolvedor:**
   - Sempre que houver trade-offs arquiteturais (ex.: síncrono vs. fila, RSC vs. Client, estratégia de migração), liste prós e contras concisos e confirme com o desenvolvedor antes de codificar a produção.
+  - **Fast-Path para Mudanças Cirúrgicas Triviais ($\le 20$ linhas, sem quebra de contrato público, sem nova dependência e sem migração de banco):** Dispensa a pausa do Passo 3; avance diretamente do teste (Red) para a implementação (Green) e verificação estática (Passo 5) no mesmo turno.
 - **Passo 4 — Implementação Mínima Coesa (Green) & Simplify:**
   - Entregue o código final (sem placeholders) estritamente necessário para passar no teste, seguido do refinamento *Simplify* (remoção de duplicação e garantia de SLA) e cobertura dos 5 estados (se UI) ou idempotência (se Backend).
 - **Passo 5 — Verificação Estática, Testes & Zero Warnings:**

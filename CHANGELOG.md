@@ -19,5 +19,5 @@ e este projeto adere ao [Versionamento Semântico (SemVer 2.0.0)](https://semver
 - `backend-data-resilience`: adição de `SET lock_timeout`/`statement_timeout`, verificação final de nulos após `FOR UPDATE SKIP LOCKED`, sequência completa `CHECK NOT VALID -> VALIDATE -> SET NOT NULL -> DROP CONSTRAINT` no PostgreSQL 12+ e Online DDL no MySQL 8.0+.
 
 ### Changed
-- Substituição de todos os caminhos absolutos de máquina por `<SKILL_DIR>` e remoção do acoplamento ao nome de ferramenta `view_file`.
+- Substituição de todos os caminhos absolutos de máquina por `<SKILL_DIR>` e remoção do acoplamento a nomes de ferramentas específicas de um único harness.
 - Harmonização de `--log-format json`, métricas tipográficas (`60ch–75ch`, `line-height: 1.5`), alvos de toque WCAG 2.2 (24x24px AA vs 44x44px AAA) e ordem de custo computacional no CI.

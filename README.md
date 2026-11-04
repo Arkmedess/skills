@@ -47,6 +47,8 @@ cp ~/.gemini/config/skills/AGENTS.md ~/.gemini/config/AGENTS.md
 bash tests/test_portability.sh
 bash git-commit-sentinel/tests/test_verify_staged_diff.sh
 bash release-distribution-engineer/tests/test_check_version_and_readiness.sh
+bash infra-pipeline-hardener/tests/test_audit_dockerfile.sh
+bash runtime-performance-diagnostician/tests/test_measure_rss_memory.sh
 ```
 
 ---
