@@ -8,8 +8,10 @@ e este projeto adere ao [Versionamento Semântico (SemVer 2.0.0)](https://semver
 ## [Unreleased]
 
 ### Added
+- Novas skills: `api-contract-designer` (OpenAPI 3.1, RFC 9457 Problem Details, gRPC/Protobuf e Webhooks) e `dependency-upgrade-steward` (atualizações SemVer, determinismo de lockfiles e sincronia de runtimes).
+- Protocolo para Código Legado / Brownfield (*Characterization Tests* e *Seams*) em `vertical-slice-implementer`.
 - `AGENTS.md` versionado na raiz do repositório para eliminar dependência externa.
-- Suítes de testes automatizados: `tests/test_portability.sh`, `git-commit-sentinel/tests/test_verify_staged_diff.sh` e `release-distribution-engineer/tests/test_check_version_and_readiness.sh`.
+- Suítes de testes automatizados: `tests/test_portability.sh`, `git-commit-sentinel/tests/test_verify_staged_diff.sh`, `release-distribution-engineer/tests/test_check_version_and_readiness.sh`, `infra-pipeline-hardener/tests/test_audit_dockerfile.sh` e `runtime-performance-diagnostician/tests/test_measure_rss_memory.sh`.
 - Integração com `gitleaks git --staged` no `verify_staged_diff.sh`.
 - `README.md`, `LICENSE` (MIT), `CHANGELOG.md` e workflow `.github/workflows/ci.yml`.
 

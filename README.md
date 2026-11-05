@@ -1,6 +1,6 @@
 # Catálogo de Skills de Engenharia de Software & Governança
 
-Coleção de **19 skills modulares** e das regras globais ([`AGENTS.md`](./AGENTS.md)) para agentes de codificação (Antigravity, Claude Code, Codex, Cursor e similares), cobrindo arquitetura, TDD cirúrgico, resiliência de dados, UI/UX autoral, segurança, observabilidade, CI/CD e releases SemVer.
+Coleção de **21 skills modulares** e das regras globais ([`AGENTS.md`](./AGENTS.md)) para agentes de codificação (Antigravity, Claude Code, Codex, Cursor e similares), cobrindo arquitetura, TDD cirúrgico, contratos de API, resiliência de dados, UI/UX autoral, segurança, observabilidade, dependências, CI/CD e releases SemVer.
 
 ---
 
@@ -10,17 +10,19 @@ Coleção de **19 skills modulares** e das regras globais ([`AGENTS.md`](./AGENT
 | :--- | :--- |
 | [`project-horizon-profiler`](./project-horizon-profiler/SKILL.md) | Detecção de horizonte (Web, CLI, Batch/ETL, FFI, SDK, Mobile, Desktop) e calibração das demais skills. |
 | [`architecture-boundary-auditor`](./architecture-boundary-auditor/SKILL.md) | Auditoria de fronteiras (Vertical Slice, Hexagonal, Pipeline DAG, Clean Arch) e princípios SOLID. |
-| [`vertical-slice-implementer`](./vertical-slice-implementer/SKILL.md) | Implementação TDD (`Red -> Green -> Simplify`), Clean Code, SOLID e Cirurgia de Diff. |
+| [`vertical-slice-implementer`](./vertical-slice-implementer/SKILL.md) | Implementação TDD (`Red -> Green -> Simplify`), Characterization Tests (legado), Clean Code, SOLID e Cirurgia de Diff. |
+| [`api-contract-designer`](./api-contract-designer/SKILL.md) | Contratos HTTP/REST (OpenAPI 3.1), gRPC/Protobuf, erros RFC 9457 (Problem Details), Webhooks e evolução sem quebra. |
 | [`frontend-design`](./frontend-design/SKILL.md) | Direção de arte autoral, prevenção de clichês ("AI Slop"), Design Tokens e leis de UX. |
-| [`frontend-ui-craftsman`](./frontend-ui-craftsman/SKILL.md) | WCAG 2.2 AA, Core Web Vitals (LCP, INP, CLS), 5 estados de UI e separação RSC/Client. |
+| [`frontend-ui-craftsman`](./frontend-ui-craftsman/SKILL.md) | WCAG 2.2 AA, Core Web Vitals (LCP, INP, CLS), Flutter/Mobile, 5 estados de UI e separação RSC/Client. |
 | [`backend-data-resilience`](./backend-data-resilience/SKILL.md) | Migrações Zero-Downtime (`Expand-Backfill-Contract`), idempotência, Outbox, paginação por cursor e cache. |
 | [`cli-development`](./cli-development/SKILL.md) | Convenções POSIX (`stdout`/`stderr`, exit codes `0/1/2/130`, `--json`, `NO_COLOR`). |
 | [`test-suite-architect`](./test-suite-architect/SKILL.md) | Governança TQA (4 dimensões), Testcontainers, Property-Based Testing e mutação por diff. |
 | [`code-hygiene-auditor`](./code-hygiene-auditor/SKILL.md) | Linters nativos (zero warnings), complexidade cognitiva $\le 10$, SLA e erradicação de code smells. |
 | [`code-review-pr-auditor`](./code-review-pr-auditor/SKILL.md) | Revisão sênior de PRs: cirurgia de diff, regressões, segurança de migrações e robustez de testes. |
-| [`systematic-debugging`](./systematic-debugging/SKILL.md) | Reprodução mínima determinística em teste (*Red*), `git bisect` e isolamento da causa raiz. |
-| [`runtime-performance-diagnostician`](./runtime-performance-diagnostician/SKILL.md) | Medição empírica obrigatória (*baseline* RSS/latência/throughput) antes de qualquer otimização. |
+| [`systematic-debugging`](./systematic-debugging/SKILL.md) | Reprodução mínima determinística em teste (*Red*), `git bisect`, heisenbugs e isolamento da causa raiz. |
+| [`runtime-performance-diagnostician`](./runtime-performance-diagnostician/SKILL.md) | Medição empírica obrigatória (*baseline* RSS/latência/throughput com warmup/runs) antes de qualquer otimização. |
 | [`security-vulnerability-warden`](./security-vulnerability-warden/SKILL.md) | OWASP Top 10, BOLA/IDOR, SCA de dependências, varredura de segredos e headers de transporte. |
+| [`dependency-upgrade-steward`](./dependency-upgrade-steward/SKILL.md) | Governança de atualização de dependências (SemVer), determinismo de lockfiles, codemods e sincronia de runtimes. |
 | [`observability-logging-auditor`](./observability-logging-auditor/SKILL.md) | Logging estruturado JSON, OpenTelemetry (`trace_id`/`span_id`), RED/USE e sanitização de PII. |
 | [`infra-pipeline-hardener`](./infra-pipeline-hardener/SKILL.md) | Dockerfiles multi-stage rootless, limites de recursos no Compose e GitHub Actions fail-fast com SHA pinning. |
 | [`module-documentation-scribe`](./module-documentation-scribe/SKILL.md) | Documentação Diátaxis em 2 níveis (macro/micro), diagramas C4-Mermaid, ADRs (MADR) e Changelog. |

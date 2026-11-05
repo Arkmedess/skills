@@ -27,6 +27,11 @@ description: >-
 1. **Red (Especificação):** Comece pelo teste no diretório da fatia, focando em comportamento observável e invariantes de domínio (nunca em detalhes internos).
 2. **Green (Implementação Mínima):** Escreva apenas o código necessário para passar no contrato aprovado.
 3. **Simplify (Refatoração Pós-Green):** Com os testes verdes, revise o diff recém-criado para eliminar duplicação, reduzir aninhamento (usando *guard clauses*) e garantir Nível Único de Abstração (SLA) mantendo a suíte verde.
+4. **Protocolo para Código Legado / Brownfield Sem Testes (*Characterization Tests* & *Seams*):**
+   - Quando precisar alterar um módulo legado acoplado que ainda não possui testes:
+     1. **Characterization Test (Golden Master):** Escreva primeiro um teste que capture e fixe o comportamento atual observável do código legado sem modificá-lo.
+     2. **Extração de Costura (*Seam* / Feathers):** Introduza a menor fronteira de injeção possível (parâmetro opcional ou interface de porta) para isolar I/O externo sem reescrever a classe inteira.
+     3. **Strangler Fig / Mudança Cirúrgica:** Adicione o novo comportamento protegido pelo teste de caracterização + o novo teste TDD (*Red $\rightarrow$ Green*).
 
 ---
 
@@ -34,7 +39,8 @@ description: >-
 
 - **Topologia Coesa por Horizonte:** Agrupe pelo eixo funcional do modelo arquitetural ativo calibrado por `project-horizon-profiler` e `architecture-boundary-auditor` (`features/<feature>/` em Web/APIs/Apps, `commands/<cmd>/` em CLIs, `pipeline/stages/` em Pipelines de Dados ou `domain/`+`ports/`+`adapters/` em Hexagonal). Proibido criar pastas horizontais genéricas soltas (`controllers/`, `services/`, `utils/` globais) quando o projeto seguir Vertical Slice.
 - **Fronteiras de Especialidade (Carregue o `SKILL.md` em conjunto):**
-  - Se a fatia envolver **UI / Frontend / Componentes / CSS**: leia e aplique `frontend-ui-craftsman`.
+  - Se a fatia envolver **Contratos de API HTTP/REST, OpenAPI, gRPC, RFC 9457 ou Webhooks**: leia e aplique `api-contract-designer`.
+  - Se a fatia envolver **UI / Frontend / Componentes / CSS / Flutter**: leia e aplique `frontend-ui-craftsman`.
   - Se a fatia envolver **Migrations, SQL, Paginação, Filas, ETL ou Cache**: leia e aplique `backend-data-resilience`.
   - Se a arquitetura do repositório ainda não foi validada: leia e aplique `architecture-boundary-auditor` primeiro.
 

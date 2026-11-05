@@ -34,7 +34,8 @@ Este arquivo governa todas as interações e sessões em qualquer projeto. Todas
 | :--- | :--- | :--- |
 | **Repositório desconhecido / Início de projeto** | `project-horizon-profiler` | Identificar arquétipo (Web, CLI, Batch, FFI, Lib, Mobile) e calibrar métricas. |
 | **Nova Feature / Novo Módulo / Refactor / Dúvida de Acoplamento** | `architecture-boundary-auditor` | Mapear fronteiras, validar DIP/ISP/OCP e propor topologia (somente leitura). |
-| **Implementação ou Alteração de Código (Geral)** | `vertical-slice-implementer` | Ciclo TDD (`Red -> Green -> Simplify`), Clean Code, SOLID, GoF e cirurgia de diff. |
+| **Implementação ou Alteração de Código (Geral / Legado)** | `vertical-slice-implementer` | Ciclo TDD (`Red -> Green -> Simplify`), Characterization Tests, Clean Code, SOLID e cirurgia de diff. |
+| **Contratos de API HTTP/REST, OpenAPI, gRPC, RFC 9457 ou Webhooks** | `api-contract-designer` | Semântica HTTP, Problem Details (RFC 9457), evolução sem quebra (Expand-Contract) e idempotência. |
 | **Direção de Arte, Identidade Visual, UI Design ou Anti-Clichê** | `frontend-design` | Identidade autoral, validação/criação de tokens e style guide, resolução visual e UX. |
 | **Interfaces Web/Mobile, Componentes, CSS, UX ou Acessibilidade** | `frontend-ui-craftsman` | WCAG 2.2 AA, Core Web Vitals (LCP/INP/CLS), governança de tokens/style guide e 5 estados de UI. |
 | **Migrations, SQL, Índices, Paginação, Cache, Filas ou ETL** | `backend-data-resilience` | Zero-Downtime Migrations (`Expand-Backfill-Contract`), idempotência, DLQ e TTLs. |
@@ -44,6 +45,7 @@ Este arquivo governa todas as interações e sessões em qualquer projeto. Todas
 | **Bugs, Falhas de Teste, Stacktraces ou Comportamento Anômalo** | `systematic-debugging` | Reprodução mínima determinística em teste (*Red*) e isolamento da causa-raiz. |
 | **Lentidão, Latência, CPU/RAM, Queries Lentas ou Web Vitals** | `runtime-performance-diagnostician` | Baseline empírico obrigatório antes de otimizar CPU, I/O, banco ou bundle. |
 | **Autenticação, Autorização (IDOR/BOLA), Segredos, CORS ou SCA** | `security-vulnerability-warden` | Auditoria OWASP Top 10, controle de acesso granular, JWT e dependências. |
+| **Atualização de Dependências, Pacotes, Lockfiles ou Runtimes** | `dependency-upgrade-steward` | Upgrades SemVer isolados, determinismo de lockfiles, codemods e sincronia de runtime. |
 | **Logs, Traces, Métricas ou Remoção de `print`/`console.log`** | `observability-logging-auditor` | OpenTelemetry, correlação `trace_id`/`span_id`, sanitização de PII e níveis. |
 | **Ferramentas de Linha de Comando (CLI) ou Scripts com Flags** | `cli-development` | Separação `stdout`/`stderr`, exit codes ($0, 1, 2$), `--json`, TTY e `NO_COLOR`. |
 | **Dockerfiles, Compose, GitHub Actions ou Pipelines CI/CD** | `infra-pipeline-hardener` | Multi-stage rootless, limites de recursos, cache BuildKit e pipeline fail-fast. |
